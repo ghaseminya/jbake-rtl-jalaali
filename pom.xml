@@ -552,6 +552,21 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
+
+
+        <!-- Persian Date -->
+        <dependency>
+            <groupId>com.ibm.icu</groupId>
+            <artifactId>icu4j</artifactId>
+            <version>55.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/ir.ghasemkiani/persiancalendar -->
+        <dependency>
+            <groupId>ir.ghasemkiani</groupId>
+            <artifactId>persiancalendar</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+
     </dependencies>
     
     <distributionManagement>
