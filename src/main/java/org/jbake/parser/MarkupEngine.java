@@ -4,14 +4,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.ghasemkiani.util.icu.PersianCalendar;
+import com.ibm.icu.text.DateFormat;
+import com.ibm.icu.text.SimpleDateFormat;
+import com.ibm.icu.util.ULocale;
+import java.util.TimeZone;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
@@ -30,6 +35,9 @@ import org.slf4j.LoggerFactory;
  * @author Cédric Champeau
  */
 public abstract class MarkupEngine implements ParserEngine {
+    ULocale  uLocale = new ULocale("fa_IR");
+    TimeZone timeZone = TimeZone.getTimeZone(TimeZone.getDefault().getID());
+    PersianCalendar calendar = new PersianCalendar( uLocale);
     private static final Logger LOGGER = LoggerFactory.getLogger(MarkupEngine.class);
     private static final String HEADER_SEPARATOR = "~~~~~~";
 
@@ -94,6 +102,11 @@ public abstract class MarkupEngine implements ParserEngine {
         
         if (content.get(Crawler.Attributes.DATE) == null) {
         	content.put(Crawler.Attributes.DATE, new Date(file.lastModified()));
+        }
+        if (content.get(Crawler.Attributes.JALAALIDATE) == null) {
+            calendar.setTime(new Date(file.lastModified()));
+            SimpleDateFormat sds =(SimpleDateFormat)calendar.getDateTimeFormat(DateFormat.LONG,DateFormat.MEDIUM,uLocale);
+            content.put(Crawler.Attributes.JALAALIDATE, sds.format(calendar.getTime()));
         }
         
         if (config.getString(Keys.DEFAULT_STATUS) != null) {

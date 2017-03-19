@@ -37,6 +37,7 @@ public class Crawler {
 			String DRAFT = "draft";
 		}
 		String DATE = "date";
+        String JALAALIDATE = "jdate";
 		String STATUS = "status";
 		String TYPE = "type";
 		String TITLE = "title";
